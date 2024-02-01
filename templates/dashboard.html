@@ -1,0 +1,20 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <h2>Your Inputs:</h2>
+    <ul>
+        {% for user_input in user_inputs %}
+            <li><a href="{{ url_for('view_input', input_id=user_input.id) }}">View Input {{ user_input.id }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('stock_analysis') }}">New Analysis</a><br>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- templates/view_input.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Input</title>
+</head>
+<body>
+    <h1>Input Details</h1>
+    <p><strong>User ID:</strong> {{ user_input.user_id }}</p>
+    <p><strong>Symbol:</strong> {{ user_input.symbol }}</p>
+    <p><strong>Years:</strong> {{ user_input.years }}</p>
+    <p><strong>Time Scale:</strong> {{ user_input.time_scale }}</p>
+    <p><strong>Output File Path:</strong> {{ user_input.output_file_path }}</p>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

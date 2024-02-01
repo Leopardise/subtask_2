@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, lemonchiffon 0%, lemonchiffon 50%, cyan 50%, cyan 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .zoom-in-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .zoom-out-btn {
+            position: absolute;
+            top: 10px;
+            left: 60px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="location.href='/logout'">Logout</button>
+    <div class="container">
+        <button class="zoom-in-btn" onclick="zoomOut()">-</button>
+        <button class="zoom-in-btn" onclick="zoomIn()">+</button>
+        <button class="zoom-out-btn" onclick="zoomIn()">+</button>
+        <button class="zoom-out-btn" onclick="zoomOut()">-</button>
+        <img id="plotImage" src="data:image/png;base64,{{ plot_image }}" alt="Stock Analysis Plot">
+    </div>
+
+    <!-- JavaScript code to handle zooming -->
+    <script>
+        var currentZoom = 100;
+
+        function zoomIn() {
+            currentZoom += 10;
+            applyZoom();
+        }
+
+        function zoomOut() {
+            currentZoom -= 10;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            document.getElementById('plotImage').style.width = currentZoom + '%';
+        }
+    </script>
+</body>
+</html>

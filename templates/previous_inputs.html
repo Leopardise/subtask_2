@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, white 0%, #87CEEB 25%, #4682B4 50%, #87CEEB 75%, #1E90FF 100%);
+            font-family: Chalkboard, sans-serif;
+        }
+
+        .previous-inputs-container {
+            text-align: center; /* Add this line to center-align the text */
+        }
+
+        /* ... (existing code) */
+    </style>
+
+    <!-- ... (existing code) -->
+</head>
+<body>
+    <div class="previous-inputs-container">
+        {% if previous_inputs %}
+            {% for input_data in previous_inputs %}
+                <p>{{ loop.index }} - Stock Symbols: {{ input_data['stock_symbols'] }}, Years: {{ input_data['years'] }}, Time Scale: {{ input_data['time_scale'] }}<br><br>
+                    <!-- JavaScript function to handle button click and make asynchronous request -->
+                    <button onclick="plotData({{ loop.index - 1 }})">Plot</button>
+                </p>
+            {% endfor %}
+
+            <!-- Add this button to trigger clearing of previous inputs -->
+            <form action="/clear_previous_inputs" method="post">
+                <button type="submit">Clear Previous Inputs</button>
+            </form>
+        {% else %}
+            <p>No previous inputs available.</p>
+        {% endif %}
+    </div>
+
+    <!-- JavaScript function to handle button click and make asynchronous request -->
+    <script>
+        async function plotData(selectedInputIndex) {
+            try {
+                const response = await fetch('/show_previous_plot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ selected_input: selectedInputIndex }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    // Assuming you have an img element with id="plotImage" to display the plot
+                    document.getElementById('plotImage').src = `data:image/png;base64, ${result.plot_image}`;
+                } else {
+                    console.error('Failed to fetch plot data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+
+    <!-- Image element to display the plot -->
+    <img id="plotImage" alt="Plot Image">
+</body>
+</html>
